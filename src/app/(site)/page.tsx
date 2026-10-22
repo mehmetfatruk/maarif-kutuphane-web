@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { CatalogSearch } from "@/components/site/CatalogSearch";
-import { BookCard, CoverRow, Empty, NewsCard, NewsRow, SectionTitle } from "@/components/site/cards";
+import { BookCard, CoverRow, SectionTitle } from "@/components/site/cards";
+import { ArrowRight } from "@/components/site/icons";
+import { excerpt } from "@/lib/html";
 import { Container } from "@/components/site/PageHeader";
 import { Spines } from "@/components/site/Spines";
-import { kohaSearchUrl } from "@/lib/config";
+import { KOHA_OPAC_URL, kohaSearchUrl } from "@/lib/config";
 import { postsIn } from "@/lib/posts";
 import { librariesByCountry, LIBRARIES } from "@/data/libraries";
 
@@ -11,13 +13,12 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [news, featured, popular, recent] = await Promise.all([
-    postsIn("NEWS", 4),
+    postsIn("NEWS", 3),
     postsIn("FEATURED", 2),
     postsIn("POPULAR", 12),
     postsIn("RECENT", 12),
   ]);
-  const countries = librariesByCountry().sort((a, b) => b.libraries.length - a.libraries.length);
-  const [lead, ...rest] = news;
+  const countries = librariesByCountry();
 
   return (
     <>
@@ -33,7 +34,7 @@ export default async function HomePage() {
               {countries.length} ülkedeki {LIBRARIES.length} Maarif kütüphanesinin kitap, dergi ve e-kaynakları tek katalogda.
             </p>
             <div className="mt-8">
-              <CatalogSearch action={kohaSearchUrl} />
+              <CatalogSearch action={kohaSearchUrl} homeUrl={`${KOHA_OPAC_URL}/`} />
             </div>
           </div>
           <div className="min-w-0 [--spine-h:0.72] sm:[--spine-h:0.82] [@media(min-width:1280px)_and_(min-height:900px)]:[--spine-h:1.18]">
@@ -42,24 +43,8 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <Container className="pt-20">
-        <SectionTitle callNumber="070 · Haberler" title="Duyurular" href="/haberler-duyurular" linkLabel="Tümü" />
-        {lead ? (
-          <div className="grid gap-12 lg:grid-cols-[1.25fr_1fr]">
-            <NewsCard post={lead} />
-            {rest.length > 0 && (
-              <div className="border-b border-line">
-                {rest.map((post) => <NewsRow key={post.id} post={post} />)}
-              </div>
-            )}
-          </div>
-        ) : (
-          <Empty>Henüz duyuru eklenmedi.</Empty>
-        )}
-      </Container>
-
       {featured.length > 0 && (
-        <section className="mt-24 bg-paper py-20">
+        <section className="bg-paper py-20">
           <Container className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:items-center">
             <div>
               <p className="label-mono text-teal-600">Kütüphanecinin seçimi</p>
@@ -91,28 +76,27 @@ export default async function HomePage() {
         ) : null,
       )}
 
-      <section className="mt-28 bg-spine-forest py-20 text-white">
-        <Container>
-          <SectionTitle
-            light
-            callNumber="027 · Kütüphanelerimiz"
-            title={`${countries.length} ülkede ${LIBRARIES.length} kütüphane`}
-            href="/dunyada-maarif"
-            linkLabel="Listeyi gör"
-          />
-          <p className="font-display text-2xl font-semibold leading-relaxed tracking-tight sm:text-3xl sm:leading-relaxed">
-            {countries.map(({ country, libraries }, i) => (
-              <span key={country}>
-                <Link href="/dunyada-maarif" className="text-white transition-colors hover:text-spine-ochre">
-                  {country}
-                  <sup className="label-mono ml-0.5 text-spine-ochre">{libraries.length}</sup>
+      {/* Duyurular: sayfanın sonunda kısa bir şerit. */}
+      {news.length > 0 && (
+        <Container className="pt-24">
+          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-[6px] border-navy-900 pb-4">
+            <h2 className="text-2xl font-extrabold tracking-tight text-navy-900">Duyurular</h2>
+            <Link href="/haberler-duyurular" className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 hover:text-navy-900">
+              Tüm duyurular <ArrowRight />
+            </Link>
+          </div>
+          <ul className="grid gap-x-10 sm:grid-cols-3">
+            {news.slice(0, 3).map((post) => (
+              <li key={post.id} className="border-b border-line sm:border-b-0">
+                <Link href={`/haberler-duyurular/${post.slug}`} className="group block py-6">
+                  <h3 className="font-bold leading-snug text-navy-900 group-hover:text-teal-600">{post.title}</h3>
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">{post.subtitle || excerpt(post.body, 140)}</p>
                 </Link>
-                {i < countries.length - 1 && <span className="mx-2 text-white/30">/</span>}{" "}
-              </span>
+              </li>
             ))}
-          </p>
+          </ul>
         </Container>
-      </section>
+      )}
     </>
   );
 }
