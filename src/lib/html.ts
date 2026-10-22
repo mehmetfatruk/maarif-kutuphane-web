@@ -22,7 +22,8 @@ export function cleanHtml(html: string): string {
 
 /** HTML'den düz metin özet üretir (liste kartları ve meta açıklamaları için). */
 export function excerpt(html: string, length = 180): string {
-  const text = sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} })
+  // Etiketleri boşlukla değiştir ki "</li><li>" gibi geçişlerde kelimeler birleşmesin.
+  const text = sanitizeHtml(html.replace(/<\/?(p|li|h\d|br|div|ul|ol|blockquote)[^>]*>/gi, " "), { allowedTags: [], allowedAttributes: {} })
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();

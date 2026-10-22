@@ -2,30 +2,26 @@ import Link from "next/link";
 
 type Crumb = { label: string; href?: string };
 
+/** Alt sayfaların başlık bandı: kâğıt zemin, künye satırı gibi konum bilgisi. */
 export function PageHeader({ title, crumbs = [], lead }: { title: string; crumbs?: Crumb[]; lead?: string }) {
   return (
-    <div className="relative overflow-hidden bg-navy-800 text-white">
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: "url(/img/bg2.jpg)" }}
-        aria-hidden
-      />
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-        <nav aria-label="Konum" className="text-sm text-navy-100">
-          <ol className="flex flex-wrap items-center gap-2">
+    <div className="border-b border-line bg-paper">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <nav aria-label="Konum">
+          <ol className="label-mono flex flex-wrap items-center gap-2 text-muted">
             <li>
-              <Link href="/" className="hover:text-teal-400">Anasayfa</Link>
+              <Link href="/" className="hover:text-teal-600">Anasayfa</Link>
             </li>
             {crumbs.map((c) => (
               <li key={c.label} className="flex items-center gap-2">
-                <span aria-hidden>/</span>
-                {c.href ? <Link href={c.href} className="hover:text-teal-400">{c.label}</Link> : <span>{c.label}</span>}
+                <span aria-hidden className="text-teal-500">/</span>
+                {c.href ? <Link href={c.href} className="hover:text-teal-600">{c.label}</Link> : <span className="line-clamp-1">{c.label}</span>}
               </li>
             ))}
           </ol>
         </nav>
-        <h1 className="mt-3 max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
-        {lead && <p className="mt-3 max-w-3xl text-lg text-navy-100">{lead}</p>}
+        <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-tight tracking-tight text-navy-900 sm:text-5xl">{title}</h1>
+        {lead && <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">{lead}</p>}
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ export default async function Page({ params }: Props) {
           </div>
         </article>
         <aside>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Tüm yayınlar</h2>
+          <h2 className="label-mono text-muted">Tüm yayınlar</h2>
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {all.map((p) => (
               <li key={p.id}>

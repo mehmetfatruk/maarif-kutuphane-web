@@ -18,22 +18,27 @@ export default function Page() {
             { value: LIBRARIES.length, label: "Kütüphane" },
             { value: groups.length, label: "Ülke" },
           ].map((s) => (
-            <div key={s.label} className="rounded-2xl bg-navy-800 p-6 text-white">
-              <dt className="text-sm font-medium uppercase tracking-wider text-navy-100">{s.label}</dt>
-              <dd className="mt-1 text-4xl font-bold text-teal-400">{s.value}</dd>
+            <div key={s.label} className="pattern-knot rounded bg-navy-900 p-6 text-white">
+              <dt className="label-mono text-teal-400">{s.label}</dt>
+              <dd className="mt-2 font-display text-5xl font-semibold">{s.value}</dd>
             </div>
           ))}
         </dl>
 
         <div className="mt-12 columns-1 gap-6 md:columns-2 xl:columns-3">
           {groups.map(({ country, libraries }) => (
-            <section key={country} className="mb-6 break-inside-avoid rounded-2xl border border-line p-5">
-              <h2 className="flex items-center justify-between text-lg font-semibold text-navy-800">
+            <section key={country} className="mb-6 break-inside-avoid rounded border border-line p-5">
+              <h2 className="flex items-center justify-between font-display text-lg font-semibold text-navy-900">
                 {country}
                 <span className="rounded-full bg-teal-100 px-2.5 py-0.5 text-sm font-semibold text-teal-600">{libraries.length}</span>
               </h2>
               <ul className="mt-3 space-y-1.5 text-[15px] text-muted">
-                {libraries.map((lib) => <li key={lib.code}>{lib.name}</li>)}
+                {libraries.map((lib) => (
+                  <li key={lib.code} className="flex gap-3">
+                    <span className="label-mono w-12 shrink-0 pt-1 text-teal-600">{lib.code}</span>
+                    <span>{lib.name}</span>
+                  </li>
+                ))}
               </ul>
             </section>
           ))}

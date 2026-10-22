@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
           {post.date && <p className="mb-6 flex items-center gap-1.5 text-sm text-muted"><Calendar /> {post.date}</p>}
           {post.images[0] && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={mediaUrl(post.images[0])} alt="" className="mb-8 w-full rounded-2xl" />
+            <img src={mediaUrl(post.images[0])} alt="" className="mb-8 w-full rounded" />
           )}
           <Html html={post.body} />
           {post.images.length > 1 && (
@@ -62,7 +62,7 @@ export default async function Page({ params }: Props) {
         </article>
         {others.length > 0 && (
           <aside>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Diğer duyurular</h2>
+            <h2 className="label-mono text-muted">Diğer duyurular</h2>
             <ul className="mt-4 divide-y divide-line border-y border-line">
               {others.map((p) => (
                 <li key={p.id}>

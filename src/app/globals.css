@@ -1,22 +1,29 @@
 @import "tailwindcss";
 
-/* Renkler eski kütüphane sitesinden ve Maarif kurumsal kimliğinden alındı. */
+/*
+ * Okuma salonu: Maarif laciverti ve logodaki turkuaz, serin bir kâğıt zemin.
+ * Başlıklar Literata (kitap yazısı), metin Figtree, künye bilgileri IBM Plex Mono.
+ */
 @theme {
-  --color-navy-950: #0f2440;
-  --color-navy-900: #163556;
-  --color-navy-800: #1c4068;
-  --color-navy-700: #234c77;
+  --color-navy-950: #0b2036;
+  --color-navy-900: #10304e;
+  --color-navy-800: #163d61;
+  --color-navy-700: #1f4d78;
   --color-navy-600: #2d5f93;
-  --color-navy-100: #e3ebf4;
-  --color-navy-50: #f2f6fa;
-  --color-teal-600: #1f8f99;
-  --color-teal-500: #29a8b3;
-  --color-teal-400: #30bdc9;
-  --color-teal-100: #d7f1f3;
-  --color-ink: #1d2733;
-  --color-muted: #5b6876;
-  --color-line: #dfe5ec;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-navy-100: #dfe8f1;
+  --color-navy-50: #f0f4f8;
+  --color-teal-600: #0b8995;
+  --color-teal-500: #12a9b7;
+  --color-teal-400: #3cc4cf;
+  --color-teal-100: #d6f0f2;
+  --color-paper: #f4f6f4;
+  --color-shelf: #c9a46a;
+  --color-ink: #1a2633;
+  --color-muted: #586776;
+  --color-line: #dbe2e6;
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), Georgia, "Times New Roman", serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
 html {
@@ -24,7 +31,59 @@ html {
 }
 
 body {
-  @apply bg-white text-ink antialiased;
+  @apply bg-white font-sans text-ink antialiased;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-teal-500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Künye etiketi: yer numarası, tarih gibi küçük büyük harfli mono yazı. */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* Kitap rafı: kapakların altında duran tahta çıta. */
+.shelf {
+  position: relative;
+}
+.shelf::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(#d8b67d, var(--color-shelf) 40%, #a8844c);
+  box-shadow: 0 10px 18px -8px rgb(11 32 54 / 0.45);
+}
+
+/* Logodaki geçme motifinden esinlenen hafif desen (koyu zeminler için). */
+.pattern-knot {
+  background-image:
+    linear-gradient(45deg, rgb(255 255 255 / 0.018) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 0.018) 75%),
+    linear-gradient(45deg, rgb(255 255 255 / 0.018) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 0.018) 75%);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
 }
 
 /* Yönetim panelinden gelen HTML içerik için okunaklı tipografi. */
@@ -35,33 +94,36 @@ body {
   @apply mt-4;
 }
 .prose-maarif h2 {
-  @apply mt-8 text-2xl font-semibold text-navy-800;
+  @apply mt-10 font-display text-2xl font-semibold text-navy-900;
 }
 .prose-maarif h3 {
-  @apply mt-6 text-xl font-semibold text-navy-800;
+  @apply mt-8 font-display text-xl font-semibold text-navy-900;
 }
 .prose-maarif h4 {
-  @apply mt-5 text-lg font-semibold text-navy-800;
+  @apply mt-6 text-lg font-semibold text-navy-900;
 }
 .prose-maarif a {
-  @apply font-medium text-teal-600 underline underline-offset-2 hover:text-navy-700;
+  @apply font-medium text-teal-600 underline decoration-teal-500/40 underline-offset-4 hover:decoration-teal-600;
 }
 .prose-maarif ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 marker:text-teal-500;
 }
 .prose-maarif ol {
-  @apply list-decimal pl-6;
+  @apply list-decimal pl-6 marker:font-mono marker:text-teal-600;
 }
 .prose-maarif blockquote {
-  @apply border-l-4 border-teal-500 bg-navy-50 py-2 pl-4 text-muted;
+  @apply border-l-2 border-teal-500 pl-5 font-display text-xl italic leading-relaxed text-navy-800;
 }
 .prose-maarif img {
-  @apply h-auto max-w-full rounded-lg;
+  @apply h-auto max-w-full rounded;
 }
 .prose-maarif table {
   @apply w-full border-collapse text-base;
 }
 .prose-maarif th,
 .prose-maarif td {
-  @apply border border-line px-3 py-2 text-left;
+  @apply border-b border-line px-3 py-2 text-left;
+}
+.prose-maarif th {
+  @apply label-mono text-muted;
 }

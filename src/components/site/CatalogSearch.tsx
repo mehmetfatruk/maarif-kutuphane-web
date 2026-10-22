@@ -23,7 +23,7 @@ const MATERIALS = [
 ];
 
 const selectClass =
-  "h-12 w-full rounded-lg border border-line bg-white px-3 text-[15px] text-ink focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30";
+  "h-12 w-full rounded border border-line bg-white px-3 text-[15px] text-ink focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30";
 
 // Boş seçimler Koha'ya "limit=" olarak gitmesin diye gönderimden hemen önce devre dışı bırakılır.
 function dropEmptyFilters(event: React.FormEvent<HTMLFormElement>) {
@@ -37,27 +37,32 @@ export function CatalogSearch({ action }: { action: string }) {
   const [advanced, setAdvanced] = useState(false);
 
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-2xl shadow-navy-950/20 sm:p-6">
-      <div role="tablist" className="mb-4 inline-flex rounded-lg bg-navy-50 p-1 text-sm font-semibold">
-        {[
-          { key: false, label: "Bütünleşik Arama" },
-          { key: true, label: "Gelişmiş Arama" },
-        ].map((tab) => (
-          <button
-            key={tab.label}
-            type="button"
-            role="tab"
-            aria-selected={advanced === tab.key}
-            onClick={() => setAdvanced(tab.key)}
-            className={`rounded-md px-4 py-2 transition-colors ${
-              advanced === tab.key ? "bg-white text-navy-800 shadow-sm" : "text-muted hover:text-navy-800"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+    // Katalog fişi: üstte künye satırı, altta fiş çekmecesindeki çubuk deliği.
+    <div className="relative rounded-md bg-white px-5 pb-10 pt-4 shadow-2xl shadow-navy-950/30 sm:px-7">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-dashed border-line pb-3">
+        <span className="label-mono text-teal-600">Ortak Katalog</span>
+        <div role="tablist" className="flex gap-5 text-sm font-semibold">
+          {[
+            { key: false, label: "Bütünleşik arama" },
+            { key: true, label: "Gelişmiş arama" },
+          ].map((tab) => (
+            <button
+              key={tab.label}
+              type="button"
+              role="tab"
+              aria-selected={advanced === tab.key}
+              onClick={() => setAdvanced(tab.key)}
+              className={`border-b-2 pb-1 transition-colors ${
+                advanced === tab.key ? "border-teal-500 text-navy-900" : "border-transparent text-muted hover:text-navy-900"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
+      <div className="mt-5">
       <form action={action} method="get" onSubmit={dropEmptyFilters} className="grid gap-3 sm:grid-cols-[1fr_auto]">
         {advanced && <input type="hidden" name="advsearch" value="1" />}
         <label className="sr-only" htmlFor="catalog-q">Anahtar kelime</label>
@@ -66,11 +71,11 @@ export function CatalogSearch({ action }: { action: string }) {
           name="q"
           required
           placeholder="Kitap adı, yazar, konu veya ISBN"
-          className="h-12 w-full rounded-lg border border-line px-4 text-[15px] focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+          className="h-13 w-full rounded border border-line bg-paper px-4 text-base focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
         />
         <button
           type="submit"
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-teal-500 px-6 font-semibold text-white transition-colors hover:bg-teal-600"
+          className="inline-flex h-13 items-center justify-center gap-2 rounded bg-navy-900 px-7 font-semibold text-white transition-colors hover:bg-teal-600"
         >
           <Search /> Ara
         </button>
@@ -105,6 +110,8 @@ export function CatalogSearch({ action }: { action: string }) {
           </div>
         )}
       </form>
+      </div>
+      <span aria-hidden className="absolute bottom-3 left-1/2 size-3.5 -translate-x-1/2 rounded-full bg-navy-900/80 shadow-inner" />
     </div>
   );
 }
