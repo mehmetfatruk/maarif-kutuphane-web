@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Bir içerik birden fazla bölümde görünebilir (eski sitedeki "cat" alanı gibi).
+enum Section {
+  FEATURED    // Öne Çıkanlar (anasayfa)
+  POPULAR     // Çok Okunanlar (anasayfa)
+  RECENT      // Son Eklenenler (anasayfa)
+  NEWS        // Haberler ve Duyurular
+  PUBLICATION // Maarif Yayınları
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  sections    Section[]
+  title       String
+  subtitle    String?
+  slug        String    @unique
+  body        String    @default("")
+  /// Dış bağlantı (ör. kitabın katalog kaydı).
+  link        String?
+  /// Yayın tarihi; eski sitede serbest metindi.
+  date        String?
+  /// /media altındaki görsel yolları.
+  images      String[]
+  /// /media altındaki belge (PDF) yolu.
+  document    String?
+  legacyId    Int?      @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([sections])
+}
+
+/// Yönetim panelinden düzenlenen sabit sayfalar (Hakkımızda, Kütüphane Kuralları vb.).
+model Page {
+  key       String   @id
+  body      String   @default("")
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
