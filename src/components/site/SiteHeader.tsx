@@ -13,14 +13,20 @@ export function SiteHeader({ memberUrl }: { memberUrl: string }) {
 
   useEffect(() => setOpen(false), [pathname]);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
       <div className="bg-paper text-navy-900">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-          <span className="label-mono hidden text-muted sm:inline">Türkiye Maarif Vakfı · Kütüphane Ağı</span>
-          <a href={memberUrl} className="ml-auto inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy-900 hover:text-teal-600">
+          <span className="label-mono hidden text-muted sm:inline">
+            Türkiye Maarif Vakfı · Kütüphane Ağı
+          </span>
+          <a
+            href={memberUrl}
+            className="ml-auto inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy-900 hover:text-teal-600"
+          >
             <User /> Üye Girişi
           </a>
         </div>
@@ -28,7 +34,14 @@ export function SiteHeader({ memberUrl }: { memberUrl: string }) {
 
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
         <Link href="/" className="shrink-0" aria-label="Anasayfa">
-          <Image src="/img/logo.png" alt="Türkiye Maarif Vakfı" width={174} height={60} priority className="h-12 w-auto" />
+          <Image
+            src="/img/logo.png"
+            alt="Türkiye Maarif Vakfı"
+            width={174}
+            height={60}
+            priority
+            className="h-12 w-auto"
+          />
         </Link>
 
         <nav aria-label="Ana menü" className="ml-auto hidden lg:block">
@@ -39,7 +52,9 @@ export function SiteHeader({ memberUrl }: { memberUrl: string }) {
                   <button
                     type="button"
                     className={`flex items-center gap-1 rounded-md px-3 py-2 text-[15px] font-semibold transition-colors hover:text-teal-600 ${
-                      item.children.some((c) => isActive(c.href)) ? "text-teal-600" : "text-navy-900"
+                      item.children.some((c) => isActive(c.href))
+                        ? "text-teal-600"
+                        : "text-navy-900"
                     }`}
                   >
                     {item.label}
@@ -52,7 +67,9 @@ export function SiteHeader({ memberUrl }: { memberUrl: string }) {
                           <Link
                             href={child.href}
                             className={`block px-4 py-2.5 text-[15px] hover:bg-navy-50 hover:text-teal-600 ${
-                              isActive(child.href) ? "font-semibold text-teal-600" : "text-ink"
+                              isActive(child.href)
+                                ? "font-semibold text-teal-600"
+                                : "text-ink"
                             }`}
                           >
                             {child.label}
@@ -89,41 +106,59 @@ export function SiteHeader({ memberUrl }: { memberUrl: string }) {
           type="button"
           className="rounded-md p-2 text-navy-800 lg:hidden"
           onClick={() => setOpen((v) => !v)}
+          aria-controls="mobile-menu"
           aria-expanded={open}
           aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
         >
-          {open ? <Close /> : <Menu />}
+          <span data-icon="open" hidden={open}>
+            <Menu />
+          </span>
+          <span data-icon="close" hidden={!open}>
+            <Close />
+          </span>
         </button>
       </div>
 
-      {open && (
-        <nav aria-label="Mobil menü" className="max-h-[calc(100vh-7.25rem)] overflow-y-auto border-t border-line bg-white lg:hidden">
-          <ul className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-            {NAV.map((item) => (
-              <li key={item.label} className="border-b border-line last:border-0">
-                {item.children ? (
-                  <>
-                    <p className="pt-3 text-xs font-semibold uppercase tracking-wider text-muted">{item.label}</p>
-                    <ul className="pb-2">
-                      {item.children.map((child) => (
-                        <li key={child.href}>
-                          <Link href={child.href} className="block py-2 font-medium text-navy-800">
-                            {child.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <Link href={item.href!} className="block py-3 font-semibold text-navy-800">
+      {/* Menü her zaman sayfada durur, kapalıyken gizlidir (statik önizleme de aynı işaretlemeyle açabilsin diye). */}
+      <nav
+        id="mobile-menu"
+        hidden={!open}
+        aria-label="Mobil menü"
+        className="max-h-[calc(100vh-7.25rem)] overflow-y-auto border-t border-line bg-white lg:hidden"
+      >
+        <ul className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+          {NAV.map((item) => (
+            <li key={item.label} className="border-b border-line last:border-0">
+              {item.children ? (
+                <>
+                  <p className="pt-3 text-xs font-semibold uppercase tracking-wider text-muted">
                     {item.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+                  </p>
+                  <ul className="pb-2">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={child.href}
+                          className="block py-2 font-medium text-navy-800"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <Link
+                  href={item.href!}
+                  className="block py-3 font-semibold text-navy-800"
+                >
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }
