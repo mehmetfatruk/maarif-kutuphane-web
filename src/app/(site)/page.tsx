@@ -23,7 +23,7 @@ export default async function HomePage() {
     <>
       {/* İlk ekran: başlık, arama ve raf birlikte görünür (üst menü 7.25rem). */}
       <section className="border-b border-line bg-gradient-to-b from-white to-paper">
-        <Container className="grid gap-10 pt-10 lg:min-h-[calc(100svh-7.25rem)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pb-8 lg:pt-0">
+        <Container className="grid gap-10 pt-10 lg:min-h-[calc(100svh-7.25rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-end lg:gap-12 lg:pb-8 lg:pt-0">
           <div className="min-w-0 self-center lg:py-10">
             <p className="label-mono text-teal-600">Türkiye Maarif Vakfı Kütüphaneleri</p>
             <h1 className="display-tight mt-4 text-5xl text-navy-900 sm:text-6xl xl:text-7xl">
@@ -36,7 +36,7 @@ export default async function HomePage() {
               <CatalogSearch action={kohaSearchUrl} />
             </div>
           </div>
-          <div className="min-w-0 [--spine-h:0.82] [--spine-w:0.82] [@media(min-width:1280px)_and_(min-height:900px)]:[--spine-h:1.18]">
+          <div className="min-w-0 [--spine-h:0.72] sm:[--spine-h:0.82] [@media(min-width:1280px)_and_(min-height:900px)]:[--spine-h:1.18]">
             <Spines />
           </div>
         </Container>
