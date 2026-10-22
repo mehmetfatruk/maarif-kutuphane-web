@@ -4,16 +4,13 @@ import { NAV, SOCIAL } from "./nav";
 
 export function SiteFooter() {
   return (
-    <footer className="pattern-knot mt-28 bg-navy-950 text-navy-100">
+    <footer className="mt-28 bg-navy-950 text-navy-100">
       <div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6">
-        <div className="grid gap-12 border-b border-white/10 pb-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 pb-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <a href="https://www.turkiyemaarif.org/" className="inline-block rounded bg-white px-3 py-2">
               <Image src="/img/logo.png" alt="Türkiye Maarif Vakfı" width={174} height={60} className="h-10 w-auto" />
             </a>
-            <p className="mt-6 max-w-xs font-display text-xl leading-snug text-white">
-              Maarif okullarının kütüphaneleri, tek bir katalogda.
-            </p>
             <address className="mt-6 text-sm not-italic leading-6 text-navy-100/75">
               Altunizade Mah. Ord. Prof. Dr. Fahrettin Kerim Gökay Cad.
               <br />
@@ -26,7 +23,7 @@ export function SiteFooter() {
 
           {NAV.filter((n) => n.children).map((group) => (
             <div key={group.label}>
-              <h2 className="label-mono text-teal-400">{group.label}</h2>
+              <h2 className="label-mono text-spine-ochre">{group.label}</h2>
               <ul className="mt-5 space-y-3 text-[15px]">
                 {group.children!.map((link) => (
                   <li key={link.href}>
@@ -40,7 +37,11 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-4 py-7 text-sm md:flex-row md:items-center md:justify-between">
+        <p aria-hidden className="display-tight select-none overflow-hidden whitespace-nowrap text-[17vw] text-white/[0.06] lg:text-[200px]">
+          Maarif Kütüphaneleri
+        </p>
+
+        <div className="flex flex-col gap-4 border-t border-white/10 py-7 text-sm md:flex-row md:items-center md:justify-between">
           <p className="text-navy-100/70">© {new Date().getFullYear()} Türkiye Maarif Vakfı. Tüm hakları saklıdır.</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {SOCIAL.map((s) => (

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Figtree, IBM_Plex_Mono, Literata } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-// Literata: Google Play Kitaplar için tasarlanmış okuma yazı tipi; başlıklarda kullanılır.
-const display = Literata({ subsets: ["latin", "latin-ext"], variable: "--ff-display", style: ["normal", "italic"] });
-const body = Figtree({ subsets: ["latin", "latin-ext"], variable: "--ff-body" });
-// Yer numaraları, tarihler gibi künye bilgileri için.
+// Bricolage Grotesque: başlıklar ve büyük rakamlar; Instrument Sans: metin.
+const display = Bricolage_Grotesque({ subsets: ["latin", "latin-ext"], variable: "--ff-display", axes: ["opsz", "wdth"] });
+const body = Instrument_Sans({ subsets: ["latin", "latin-ext"], variable: "--ff-body" });
+// Raf etiketleri, sınıf numaraları ve tarihler için.
 const mono = IBM_Plex_Mono({ subsets: ["latin", "latin-ext"], weight: ["400", "500"], variable: "--ff-mono" });
 
 export const metadata: Metadata = {

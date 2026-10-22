@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 /*
- * Okuma salonu: Maarif laciverti ve logodaki turkuaz, serin bir kâğıt zemin.
- * Başlıklar Literata (kitap yazısı), metin Figtree, künye bilgileri IBM Plex Mono.
+ * Kitap rafı: neredeyse beyaz zemin, mürekkep laciverdi, Maarif turkuazı ve
+ * kitap sırtlarından alınan dört renk (hardal, orman yeşili, mürdüm, gece mavisi).
  */
 @theme {
-  --color-navy-950: #0b2036;
-  --color-navy-900: #10304e;
-  --color-navy-800: #163d61;
-  --color-navy-700: #1f4d78;
-  --color-navy-600: #2d5f93;
-  --color-navy-100: #dfe8f1;
-  --color-navy-50: #f0f4f8;
-  --color-teal-600: #0b8995;
-  --color-teal-500: #12a9b7;
-  --color-teal-400: #3cc4cf;
-  --color-teal-100: #d6f0f2;
-  --color-paper: #f4f6f4;
-  --color-shelf: #c9a46a;
-  --color-ink: #1a2633;
-  --color-muted: #586776;
-  --color-line: #dbe2e6;
+  --color-navy-950: #0e1822;
+  --color-navy-900: #142231;
+  --color-navy-800: #1d3246;
+  --color-navy-700: #284460;
+  --color-navy-600: #3a5a7a;
+  --color-navy-100: #e1e6ea;
+  --color-navy-50: #f1f3f4;
+  --color-teal-600: #08808c;
+  --color-teal-500: #0fa3b1;
+  --color-teal-400: #4cc3cd;
+  --color-teal-100: #d5eef0;
+  --color-paper: #f1f2ee;
+  --color-ink: #142231;
+  --color-muted: #5d6873;
+  --color-line: #d9ddd8;
+  --color-spine-ochre: #d39a2c;
+  --color-spine-forest: #2f5d4a;
+  --color-spine-plum: #6d2f4b;
+  --color-spine-night: #23406b;
   --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--ff-display), Georgia, "Times New Roman", serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
@@ -54,7 +57,7 @@ h3 {
   }
 }
 
-/* Künye etiketi: yer numarası, tarih gibi küçük büyük harfli mono yazı. */
+/* Raf etiketi: sınıf numarası, tarih gibi küçük büyük harfli mono yazı. */
 @utility label-mono {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -63,27 +66,19 @@ h3 {
   letter-spacing: 0.14em;
 }
 
-/* Kitap rafı: kapakların altında duran tahta çıta. */
-.shelf {
-  position: relative;
-}
-.shelf::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 14px;
-  border-radius: 2px;
-  background: linear-gradient(#d8b67d, var(--color-shelf) 40%, #a8844c);
-  box-shadow: 0 10px 18px -8px rgb(11 32 54 / 0.45);
+/* Büyük başlıklar: dar genişlik ve sıkı satır aralığı. */
+@utility display-tight {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 80;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
 }
 
-/* Logodaki geçme motifinden esinlenen hafif desen (koyu zeminler için). */
-.pattern-knot {
-  background-image:
-    linear-gradient(45deg, rgb(255 255 255 / 0.018) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 0.018) 75%),
-    linear-gradient(45deg, rgb(255 255 255 / 0.018) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 0.018) 75%);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
+/* Kitap sırtı: dikey yazı, yukarıdan aşağıya okunur. */
+@utility spine-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 /* Yönetim panelinden gelen HTML içerik için okunaklı tipografi. */
@@ -94,28 +89,28 @@ h3 {
   @apply mt-4;
 }
 .prose-maarif h2 {
-  @apply mt-10 font-display text-2xl font-semibold text-navy-900;
+  @apply mt-10 font-display text-3xl font-bold tracking-tight text-navy-900;
 }
 .prose-maarif h3 {
-  @apply mt-8 font-display text-xl font-semibold text-navy-900;
+  @apply mt-8 font-display text-2xl font-bold tracking-tight text-navy-900;
 }
 .prose-maarif h4 {
   @apply mt-6 text-lg font-semibold text-navy-900;
 }
 .prose-maarif a {
-  @apply font-medium text-teal-600 underline decoration-teal-500/40 underline-offset-4 hover:decoration-teal-600;
+  @apply font-medium text-teal-600 underline decoration-2 decoration-teal-500/30 underline-offset-4 hover:decoration-teal-600;
 }
 .prose-maarif ul {
-  @apply list-disc pl-6 marker:text-teal-500;
+  @apply list-disc pl-6 marker:text-spine-ochre;
 }
 .prose-maarif ol {
   @apply list-decimal pl-6 marker:font-mono marker:text-teal-600;
 }
 .prose-maarif blockquote {
-  @apply border-l-2 border-teal-500 pl-5 font-display text-xl italic leading-relaxed text-navy-800;
+  @apply border-l-4 border-spine-ochre pl-5 font-display text-2xl font-semibold leading-snug tracking-tight text-navy-900;
 }
 .prose-maarif img {
-  @apply h-auto max-w-full rounded;
+  @apply h-auto max-w-full;
 }
 .prose-maarif table {
   @apply w-full border-collapse text-base;

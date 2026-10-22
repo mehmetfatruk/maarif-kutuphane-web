@@ -18,19 +18,19 @@ export default function Page() {
             { value: LIBRARIES.length, label: "Kütüphane" },
             { value: groups.length, label: "Ülke" },
           ].map((s) => (
-            <div key={s.label} className="pattern-knot rounded bg-navy-900 p-6 text-white">
-              <dt className="label-mono text-teal-400">{s.label}</dt>
-              <dd className="mt-2 font-display text-5xl font-semibold">{s.value}</dd>
+            <div key={s.label} className="border-l-[10px] border-spine-ochre bg-paper p-6">
+              <dt className="label-mono text-muted">{s.label}</dt>
+              <dd className="display-tight mt-2 text-7xl text-navy-900">{s.value}</dd>
             </div>
           ))}
         </dl>
 
         <div className="mt-12 columns-1 gap-6 md:columns-2 xl:columns-3">
           {groups.map(({ country, libraries }) => (
-            <section key={country} className="mb-6 break-inside-avoid rounded border border-line p-5">
-              <h2 className="flex items-center justify-between font-display text-lg font-semibold text-navy-900">
+            <section key={country} className="mb-6 break-inside-avoid border-t-[6px] border-navy-900 bg-white pt-4">
+              <h2 className="flex items-center justify-between font-display text-2xl font-bold tracking-tight text-navy-900">
                 {country}
-                <span className="rounded-full bg-teal-100 px-2.5 py-0.5 text-sm font-semibold text-teal-600">{libraries.length}</span>
+                <span className="label-mono rounded-full bg-spine-ochre px-2.5 py-1 text-navy-950">{libraries.length}</span>
               </h2>
               <ul className="mt-3 space-y-1.5 text-[15px] text-muted">
                 {libraries.map((lib) => (
