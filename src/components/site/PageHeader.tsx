@@ -20,7 +20,7 @@ export function PageHeader({ title, crumbs = [], lead }: { title: string; crumbs
         </ol>
       </nav>
       <div className="border-b-[10px] border-navy-900 pb-10">
-        <h1 className="display-tight mt-5 max-w-5xl text-5xl text-navy-900 sm:text-7xl">{title}</h1>
+        <h1 className="display-tight mt-5 max-w-5xl text-[2.5rem] text-navy-900 [overflow-wrap:break-word] sm:text-6xl lg:text-7xl">{title}</h1>
         {lead && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{lead}</p>}
       </div>
     </div>

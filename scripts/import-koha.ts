@@ -13,7 +13,7 @@ import { toSlug } from "../src/lib/slug-base";
 const db = new PrismaClient();
 const OPAC = (process.env.KOHA_OPAC_URL ?? "https://katalog.turkiyemaarif.org").replace(/\/$/, "");
 
-type Book = { title: string; author?: string; isbn?: string; publisher?: string; year?: string; cover?: string };
+type Book = { title: string; author?: string; isbn?: string; publisher?: string; year?: string; imageNumber?: string };
 
 function clean(text: string | undefined): string | undefined {
   const t = text?.replace(/\s+/g, " ").replace(/[\s/:;,.]+$/, "").trim();
@@ -22,7 +22,9 @@ function clean(text: string | undefined): string | undefined {
 
 async function readBook(biblionumber: number): Promise<Book> {
   const $ = cheerio.load(await fetchText(`${OPAC}/cgi-bin/koha/opac-detail.pl?biblionumber=${biblionumber}`));
-  const title = clean($("h1.title, h2.title, .title[property='name']").first().text());
+  const heading = $("h1.title, h2.title, .title[property='name']").first();
+  heading.find(".title_resp_stmt").remove();
+  const title = clean(heading.text());
   if (!title) throw new Error("kitap adı bulunamadı (kayıt gizli ya da silinmiş olabilir)");
   return {
     title,
@@ -30,14 +32,19 @@ async function readBook(biblionumber: number): Promise<Book> {
     isbn: clean($("[property='isbn']").first().text())?.replace(/[^\dX]/gi, ""),
     publisher: clean($("[property='publisher'] [property='name']").first().text()),
     year: clean($("[property='datePublished']").first().text()),
-    cover: $("meta[property='og:image']").attr("content"),
+    // Kataloğa yüklenmiş kapak görseli
+    imageNumber: $("a[href*='opac-image'], img[src*='opac-image']")
+      .map((_, el) => ($(el).attr("href") ?? $(el).attr("src") ?? "").match(/imagenumber=(\d+)/)?.[1])
+      .get()
+      .find(Boolean),
   };
 }
 
-/** Sırayla dener: Koha'nın kendi kapağı, sayfadaki og:image, Open Library, Google Books. */
+/** Sırayla dener: kataloğa yüklenmiş kapak, Open Library, Google Books. */
 async function findCover(biblionumber: number, book: Book): Promise<string | null> {
-  const candidates = [`${OPAC}/cgi-bin/koha/opac-image.pl?biblionumber=${biblionumber}`];
-  if (book.cover && !book.cover.includes("logo")) candidates.push(new URL(book.cover, OPAC).toString());
+  const candidates: string[] = [];
+  if (book.imageNumber) candidates.push(`${OPAC}/cgi-bin/koha/opac-image.pl?imagenumber=${book.imageNumber}`);
+  candidates.push(`${OPAC}/cgi-bin/koha/opac-image.pl?biblionumber=${biblionumber}`);
   if (book.isbn) {
     candidates.push(`https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg?default=false`);
     try {

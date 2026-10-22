@@ -17,6 +17,10 @@ const abs = (href: string) => new URL(href, SITE + "/").toString();
 /** Gövdedeki görselleri indirip yeni adreslerine çevirir, HTML'i temizler. */
 async function localizeHtml(html: string): Promise<string> {
   const $ = cheerio.load(html, null, false);
+  // Eski sitede ara başlıklar h5/h6 ile yazılmış; yeni sitede h3 olarak korunur.
+  $("h1, h5, h6").each((_, el) => {
+    el.tagName = "h3";
+  });
   for (const img of $("img").toArray()) {
     const src = $(img).attr("src");
     const saved = src ? await download(abs(src), "images", 500) : null;

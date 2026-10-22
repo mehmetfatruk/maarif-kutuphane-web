@@ -37,7 +37,7 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <p aria-hidden className="display-tight select-none overflow-hidden whitespace-nowrap text-[17vw] text-white/[0.06] lg:text-[200px]">
+        <p aria-hidden className="display-tight select-none overflow-hidden whitespace-nowrap text-[9.5vw] text-white/[0.06] xl:text-[132px]">
           Maarif Kütüphaneleri
         </p>
 

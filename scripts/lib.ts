@@ -13,8 +13,11 @@ const EXT_BY_TYPE: Record<string, string> = {
   "application/pdf": ".pdf",
 };
 
+// Koha OPAC'ın bot korumasını geçmek için tarayıcının koyduğu çerez (KOHA_INIT=1) her istekle gönderilir.
+const HEADERS = { "User-Agent": "MaarifKutuphane-Import/1.0", Cookie: "KOHA_INIT=1" };
+
 export async function fetchText(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { "User-Agent": "MaarifKutuphane-Import/1.0" } });
+  const res = await fetch(url, { headers: HEADERS });
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
   return res.text();
 }
@@ -25,7 +28,7 @@ export async function fetchText(url: string): Promise<string> {
  */
 export async function download(url: string, dir: "images" | "documents", minBytes = 2000): Promise<string | null> {
   try {
-    const res = await fetch(url, { headers: { "User-Agent": "MaarifKutuphane-Import/1.0" }, redirect: "follow" });
+    const res = await fetch(url, { headers: HEADERS, redirect: "follow" });
     if (!res.ok) return null;
     const type = (res.headers.get("content-type") ?? "").split(";")[0].trim();
     const ext = EXT_BY_TYPE[type];
