@@ -66,7 +66,7 @@ export function CatalogSearch({ action }: { action: string }) {
             name="q"
             required
             placeholder="Kitap, yazar, konu, ISBN…"
-            className="min-w-0 flex-1 bg-transparent py-2 font-display text-2xl font-semibold tracking-tight text-navy-900 placeholder:text-navy-900/30 focus:outline-none sm:text-4xl"
+            className="min-w-0 flex-1 bg-transparent py-2 text-xl font-semibold tracking-tight text-navy-900 placeholder:text-navy-900/35 focus:outline-none sm:text-2xl"
           />
           <button
             type="submit"

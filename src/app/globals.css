@@ -25,8 +25,7 @@
   --color-spine-plum: #6d2f4b;
   --color-spine-night: #23406b;
   --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-display: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -57,22 +56,20 @@ h3 {
   }
 }
 
-/* Raf etiketi: sınıf numarası, tarih gibi küçük büyük harfli mono yazı. */
+/* Küçük etiket: bölüm adı, tarih, sınıf numarası. */
 @utility label-mono {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
 }
 
-/* Büyük başlıklar: dar genişlik ve sıkı satır aralığı. */
+/* Büyük başlıklar. */
 @utility display-tight {
   font-family: var(--font-display);
-  font-variation-settings: "wdth" 80;
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
 }
 
 /* Kitap sırtı: dikey yazı, yukarıdan aşağıya okunur. */
@@ -104,7 +101,7 @@ h3 {
   @apply list-disc pl-6 marker:text-spine-ochre;
 }
 .prose-maarif ol {
-  @apply list-decimal pl-6 marker:font-mono marker:text-teal-600;
+  @apply list-decimal pl-6 marker:text-teal-600;
 }
 .prose-maarif blockquote {
   @apply border-l-4 border-spine-ochre pl-5 font-display text-2xl font-semibold leading-snug tracking-tight text-navy-900;

@@ -45,6 +45,23 @@ LEGACY_PUBLIC_DIR="/eski/proje/MaarifL/public" \
 pnpm import:legacy
 ```
 
+### Veritabanı yedeği yoksa: yayındaki eski siteden
+
+Sabit sayfaları, haberleri (görselleriyle) ve yayınları (PDF'leriyle) eski sitenin sayfalarından okur:
+
+```bash
+pnpm import:site     # LEGACY_SITE_URL, varsayılan https://kutuphane.turkiyemaarif.org
+```
+
+### Katalogdan kitap ekleme
+
+Koha kaydındaki ad, yazar ve kapağı alıp anasayfa bölümlerine ekler (bağlantı katalog kaydına gider):
+
+```bash
+pnpm import:koha --bolum POPULAR 7383 7377 7375
+pnpm import:koha --bolum FEATURED 8042
+```
+
 ## Yayına alma (Docker)
 
 ```bash

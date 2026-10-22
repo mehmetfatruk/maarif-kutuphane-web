@@ -16,7 +16,7 @@ export function SiteFooter() {
               <br />
               Erdem Sok. No: 5, Üsküdar / İstanbul
             </address>
-            <a href="mailto:kutuphane@turkiyemaarif.org" className="mt-3 inline-block font-mono text-sm text-teal-400 hover:text-white">
+            <a href="mailto:kutuphane@turkiyemaarif.org" className="mt-3 inline-block text-sm font-semibold text-teal-400 hover:text-white">
               kutuphane@turkiyemaarif.org
             </a>
           </div>

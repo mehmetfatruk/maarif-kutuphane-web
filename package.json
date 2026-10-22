@@ -12,7 +12,9 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx scripts/seed.ts",
     "import:legacy": "tsx scripts/import-legacy.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "import:site": "tsx scripts/import-site.ts",
+    "import:koha": "tsx scripts/import-koha.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -40,6 +42,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.2",
+    "cheerio": "^1.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.28",
     "mysql2": "^3.24.6",

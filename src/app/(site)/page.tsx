@@ -21,38 +21,28 @@ export default async function HomePage() {
 
   return (
     <>
-      <section>
-        <Container className="pt-14 sm:pt-20">
-          <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div>
-              <p className="label-mono text-teal-600">Türkiye Maarif Vakfı Kütüphaneleri</p>
-              <h1 className="display-tight mt-5 text-[15vw] text-navy-900 sm:text-8xl lg:text-[8.5rem]">
-                Bugün rafta ne <span className="text-teal-500">arıyorsun?</span>
-              </h1>
+      {/* İlk ekran: başlık, arama ve raf birlikte görünür (üst menü 7.25rem). */}
+      <section className="border-b border-line bg-gradient-to-b from-white to-paper">
+        <Container className="grid gap-10 pt-10 lg:min-h-[calc(100svh-7.25rem)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pb-8 lg:pt-0">
+          <div className="min-w-0 self-center lg:py-10">
+            <p className="label-mono text-teal-600">Türkiye Maarif Vakfı Kütüphaneleri</p>
+            <h1 className="display-tight mt-4 text-5xl text-navy-900 sm:text-6xl xl:text-7xl">
+              Bugün rafta ne <span className="text-teal-500">arıyorsun?</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted">
+              {countries.length} ülkedeki {LIBRARIES.length} Maarif kütüphanesinin kitap, dergi ve e-kaynakları tek katalogda.
+            </p>
+            <div className="mt-8">
+              <CatalogSearch action={kohaSearchUrl} />
             </div>
-            <dl className="flex gap-10 lg:flex-col lg:gap-5 lg:border-l-[10px] lg:border-spine-ochre lg:pb-3 lg:pl-6">
-              <div>
-                <dd className="display-tight text-6xl text-navy-900">{LIBRARIES.length}</dd>
-                <dt className="label-mono mt-1 text-muted">kütüphane</dt>
-              </div>
-              <div>
-                <dd className="display-tight text-6xl text-navy-900">{countries.length}</dd>
-                <dt className="label-mono mt-1 text-muted">ülke, tek katalog</dt>
-              </div>
-            </dl>
           </div>
-
-          <div className="mt-12 max-w-4xl">
-            <CatalogSearch action={kohaSearchUrl} />
-          </div>
-
-          <div className="mt-16">
+          <div className="min-w-0 [--spine-h:0.82] [--spine-w:0.82] [@media(min-width:1280px)_and_(min-height:900px)]:[--spine-h:1.18]">
             <Spines />
           </div>
         </Container>
       </section>
 
-      <Container className="pt-24">
+      <Container className="pt-20">
         <SectionTitle callNumber="070 · Haberler" title="Duyurular" href="/haberler-duyurular" linkLabel="Tümü" />
         {lead ? (
           <div className="grid gap-12 lg:grid-cols-[1.25fr_1fr]">
@@ -96,7 +86,7 @@ export default async function HomePage() {
         posts.length ? (
           <Container key={title} className="pt-24">
             <SectionTitle callNumber={callNumber} title={title} />
-            <CoverRow posts={posts} />
+            <CoverRow posts={posts} label={title} />
           </Container>
         ) : null,
       )}

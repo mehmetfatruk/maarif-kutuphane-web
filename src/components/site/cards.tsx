@@ -2,6 +2,7 @@ import type { Post } from "@prisma/client";
 import Link from "next/link";
 import { excerpt } from "@/lib/html";
 import { mediaUrl } from "@/lib/media-url";
+import { BookSlider } from "./BookSlider";
 import { ArrowRight, Book } from "./icons";
 
 /** Kitap kapağı: sırtta ince gölge ile basılı kitap görünümü. */
@@ -41,18 +42,16 @@ export function BookCard({ post, className = "" }: { post: Post; className?: str
   );
 }
 
-/** Kapak duvarı: dar ekranda yatay kaydırılır. */
-export function CoverRow({ posts }: { posts: Post[] }) {
+/** Kapak kaydırıcısı: oklarla ya da parmakla kaydırılır. */
+export function CoverRow({ posts, label }: { posts: Post[]; label: string }) {
   return (
-    <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6">
-      <ul className="flex min-w-max gap-7">
-        {posts.map((post) => (
-          <li key={post.id} className="w-36 shrink-0 sm:w-40">
-            <BookCard post={post} />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <BookSlider label={label}>
+      {posts.map((post) => (
+        <li key={post.id} className="w-40 shrink-0 snap-start sm:w-44">
+          <BookCard post={post} />
+        </li>
+      ))}
+    </BookSlider>
   );
 }
 

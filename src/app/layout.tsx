@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-// Bricolage Grotesque: başlıklar ve büyük rakamlar; Instrument Sans: metin.
-const display = Bricolage_Grotesque({ subsets: ["latin", "latin-ext"], variable: "--ff-display", axes: ["opsz", "wdth"] });
-const body = Instrument_Sans({ subsets: ["latin", "latin-ext"], variable: "--ff-body" });
-// Raf etiketleri, sınıf numaraları ve tarihler için.
-const mono = IBM_Plex_Mono({ subsets: ["latin", "latin-ext"], weight: ["400", "500"], variable: "--ff-mono" });
+// Plus Jakarta Sans: başlık ve metin için tek, okunaklı yazı ailesi.
+const sans = Plus_Jakarta_Sans({ subsets: ["latin", "latin-ext"], variable: "--ff-body" });
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="tr" className={sans.variable}>
       <body>{children}</body>
     </html>
   );
